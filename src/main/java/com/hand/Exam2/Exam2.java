@@ -32,14 +32,15 @@ public class Exam2 {
 			Connection conn = getConn();
 			Statement st = (Statement) conn.createStatement();
 			
-			String sql = "select distinct cl.name,fid,title,rental_date " 
-						+ "from customer_list cl,film_list fl,rental r,inventory i,store st "
+			String sql = "select name,f.film_id,title,rental_date "
+						+ "from customer_list cl,film f,rental r "
 						+ "where cl.id = " + id 
-						+ " and cl.id = r.customer_id"
-						+ " and r.staff_id = st.manager_staff_id"
-						+ " and st.store_id = i.store_id"
-						+ " and i.film_id = fl.fid"
-						+ " order by rental_date DESC";
+						+ " and film_id in "
+						+ "(select film_id from inventory "
+						+ "where inventory_id in "
+						+ "(select inventory_id from rental where customer_id = " + id +"))"
+						+ " group by film_id"
+						+ " order by rental_date,f.film_id desc";
 			ResultSet rs = st.executeQuery(sql);
 			Boolean bool = true;
 			while(rs.next()){
