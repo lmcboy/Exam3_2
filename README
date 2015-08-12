@@ -1,0 +1,4 @@
+运行程序步骤：(先进入到本项目所在文件夹，再运行以下语句)
+
+ 1. mvn compile
+ 2. mvn exec:java -Dexec.mainClass="com.hand.Exam2.Exam2"
