@@ -51,14 +51,14 @@ public class Exam2 {
 					System.out.print("| \t");
 					System.out.print(rs.getString(3)+ " \t");
 					System.out.print("| \t");
-					System.out.println(rs.getDate(4)+ " \t");
+					System.out.println(rs.getTimestamp(4)+ " \t");
 					bool = false;
 				}else{
 					System.out.print(rs.getInt(2)+ " \t");
 					System.out.print("| \t");
 					System.out.print(rs.getString(3)+ " \t");
 					System.out.print("| \t");
-					System.out.println(rs.getDate(4)+ " \t");
+					System.out.println(rs.getTimestamp(4)+ " \t");
 				}
 			}
 			conn.close();
