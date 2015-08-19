@@ -32,7 +32,6 @@ public class Exam2 {
 			Connection conn = getConn();
 			Statement st = (Statement) conn.createStatement();
 			
-<<<<<<< HEAD
 			String sql = "SELECT last_name,first_name,f.film_id,title,rental_date"
 					+ " FROM customer c,film f,rental r"
 					+ " where c.customer_id = 571"
@@ -42,17 +41,6 @@ public class Exam2 {
 					+ " AND c.customer_id=r.customer_id"
 					+ " ORDER BY rental_date DESC";
 
-=======
-			String sql = "select name,f.film_id,title,rental_date "
-						+ "from customer_list cl,film f,rental r "
-						+ "where cl.id = " + id 
-						+ " and film_id in "
-						+ "(select film_id from inventory "
-						+ "where inventory_id in "
-						+ "(select inventory_id from rental where customer_id = " + id +"))"
-						+ " group by film_id"
-						+ " order by rental_date,f.film_id desc";
->>>>>>> 192ca2280a08bb444df4a00ee35c24db70fe7645
 			ResultSet rs = st.executeQuery(sql);
 			Boolean bool = true;
 			while(rs.next()){
@@ -63,22 +51,14 @@ public class Exam2 {
 					System.out.print("| \t");
 					System.out.print(rs.getString(4)+ " \t");
 					System.out.print("| \t");
-<<<<<<< HEAD
 					System.out.println(rs.getTimestamp(5)+ " \t");
-=======
-					System.out.println(rs.getTimestamp(4)+ " \t");
->>>>>>> 192ca2280a08bb444df4a00ee35c24db70fe7645
 					bool = false;
 				}else{
 					System.out.print(rs.getInt(3)+ " \t");
 					System.out.print("| \t");
 					System.out.print(rs.getString(4)+ " \t");
 					System.out.print("| \t");
-<<<<<<< HEAD
 					System.out.println(rs.getTimestamp(5)+ " \t");
-=======
-					System.out.println(rs.getTimestamp(4)+ " \t");
->>>>>>> 192ca2280a08bb444df4a00ee35c24db70fe7645
 				}
 			}
 			conn.close();
