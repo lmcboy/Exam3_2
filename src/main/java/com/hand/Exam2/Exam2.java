@@ -32,32 +32,33 @@ public class Exam2 {
 			Connection conn = getConn();
 			Statement st = (Statement) conn.createStatement();
 			
-			String sql = "select distinct cl.name,fid,title,rental_date " 
-						+ "from customer_list cl,film_list fl,rental r,inventory i,store st "
-						+ "where cl.id = " + id 
-						+ " and cl.id = r.customer_id"
-						+ " and r.staff_id = st.manager_staff_id"
-						+ " and st.store_id = i.store_id"
-						+ " and i.film_id = fl.fid"
-						+ " order by rental_date DESC";
+			String sql = "SELECT last_name,first_name,f.film_id,title,rental_date"
+					+ " FROM customer c,film f,rental r"
+					+ " where c.customer_id = 571"
+					+ " AND film_id in (select film_id from inventory where inventory_id in"
+					+ " (select inventory_id from rental where rental_id in"
+					+ " (select rental_id from rental where customer_id = 571)))"
+					+ " AND c.customer_id=r.customer_id"
+					+ " ORDER BY rental_date DESC";
+
 			ResultSet rs = st.executeQuery(sql);
 			Boolean bool = true;
 			while(rs.next()){
 				if(bool){
-					System.out.println(rs.getString("name") + " 租用的 Film->");
+					System.out.println(rs.getString(2) + " " + rs.getString(1) + " 租用的 Film->");
 					System.out.println("Film ID \t" + "| \t" + "Film 名称 \t" + "| \t" + "租用时间");
-					System.out.print(rs.getInt(2)+ " \t");
+					System.out.print(rs.getInt(3)+ " \t");
 					System.out.print("| \t");
-					System.out.print(rs.getString(3)+ " \t");
+					System.out.print(rs.getString(4)+ " \t");
 					System.out.print("| \t");
-					System.out.println(rs.getDate(4)+ " \t");
+					System.out.println(rs.getTimestamp(5)+ " \t");
 					bool = false;
 				}else{
-					System.out.print(rs.getInt(2)+ " \t");
+					System.out.print(rs.getInt(3)+ " \t");
 					System.out.print("| \t");
-					System.out.print(rs.getString(3)+ " \t");
+					System.out.print(rs.getString(4)+ " \t");
 					System.out.print("| \t");
-					System.out.println(rs.getDate(4)+ " \t");
+					System.out.println(rs.getTimestamp(5)+ " \t");
 				}
 			}
 			conn.close();
