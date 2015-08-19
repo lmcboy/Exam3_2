@@ -34,10 +34,10 @@ public class Exam2 {
 			
 			String sql = "SELECT last_name,first_name,f.film_id,title,rental_date"
 					+ " FROM customer c,film f,rental r"
-					+ " where c.customer_id = 571"
+					+ " where c.customer_id = " + id
 					+ " AND film_id in (select film_id from inventory where inventory_id in"
 					+ " (select inventory_id from rental where rental_id in"
-					+ " (select rental_id from rental where customer_id = 571)))"
+					+ " (select rental_id from rental where customer_id = " + id + ")))"
 					+ " AND c.customer_id=r.customer_id"
 					+ " ORDER BY rental_date DESC";
 
